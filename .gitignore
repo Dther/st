@@ -1,0 +1,6 @@
+st
+*.out
+*.o
+/patches
+*.orig
+*.rej
