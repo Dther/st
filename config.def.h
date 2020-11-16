@@ -5,7 +5,7 @@
  *
  * font: Terminus is neato
  */
-static char *font = "Terminus:pixelsize=14:antialias=true:autohint=true";
+static char *font = "xos4 Terminus:pixelsize=14:antialias=true:autohint=true";
 static int borderpx = 2;
 
 /*
