@@ -98,32 +98,44 @@ float alpha = 0.8;
 
 /* Terminal colors (16 first used in escape sequence) */
 static const char *colorname[] = {
-	/* 8 normal colors */
-	"black",
-	"red3",
-	"green3",
-	"yellow3",
-	"blue2",
-	"magenta3",
-	"cyan3",
-	"gray90",
-
-	/* 8 bright colors */
-	"gray50",
-	"red",
-	"green",
-	"yellow",
-	"#5c5cff",
-	"magenta",
-	"cyan",
-	"white",
-
-	[255] = 0,
-
-	/* more colors can be added after 255 to use with DefaultXX */
-	"#cccccc",
-	"#555555",
-	"black",
+	/* solarized dark */
+	//"#073642",  /*  0: black    */
+	//"#dc322f",  /*  1: red      */
+	//"#859900",  /*  2: green    */
+	//"#b58900",  /*  3: yellow   */
+	//"#268bd2",  /*  4: blue     */
+	//"#d33682",  /*  5: magenta  */
+	//"#2aa198",  /*  6: cyan     */
+	//"#eee8d5",  /*  7: white    */
+	//"#002b36",  /*  8: brblack  */
+	//"#cb4b16",  /*  9: brred    */
+	//"#586e75",  /* 10: brgreen  */
+	//"#657b83",  /* 11: bryellow */
+	//"#839496",  /* 12: brblue   */
+	//"#6c71c4",  /* 13: brmagenta*/
+	//"#93a1a1",  /* 14: brcyan   */
+	//"#fdf6e3",  /* 15: brwhite  */
+    
+    /* jellybeans dark */
+    "#393939",
+    "#ca674a",
+    "#96a967",
+    "#d3a94a",
+    "#5778c1",
+    "#9c35ac",
+    "#6eb5f3",
+    "#a9a9a9",
+    "#535551",
+    "#ea2828",
+    "#87dd32",
+    "#f7e44d",
+    "#6f9bca",
+    "#a97ca4",
+    "#32dddd",
+    "#e9e9e7",
+    [255] = 0,
+    "#121212",
+    "#d7d7d7",
 };
 
 
@@ -131,10 +143,10 @@ static const char *colorname[] = {
  * Default colors (colorname index)
  * foreground, background, cursor, reverse cursor
  */
-unsigned int defaultfg = 7;
-unsigned int defaultbg = 258;
-static unsigned int defaultcs = 256;
-static unsigned int defaultrcs = 257;
+unsigned int defaultfg = 257;
+unsigned int defaultbg = 256;
+static unsigned int defaultcs = 14;
+static unsigned int defaultrcs = 15;
 
 /*
  * https://invisible-island.net/xterm/ctlseqs/ctlseqs.html#h4-Functions-using-CSI-_-ordered-by-the-final-character-lparen-s-rparen:CSI-Ps-SP-q.1D81
