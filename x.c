@@ -1882,6 +1882,7 @@ cmessage(XEvent *e)
 			win.mode &= ~MODE_FOCUSED;
 		}
 	} else if (e->xclient.data.l[0] == xw.wmdeletewin) {
+		// TODO: Add a dmenu prompt that asks if we're sure we want to exit
 		ttyhangup();
 		exit(0);
 	}

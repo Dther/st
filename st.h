@@ -83,6 +83,7 @@ void draw(void);
 
 void kscrolldown(const Arg *);
 void kscrollup(const Arg *);
+void iso14755(const Arg *);
 void printscreen(const Arg *);
 void printsel(const Arg *);
 void sendbreak(const Arg *);
@@ -125,4 +126,5 @@ extern char *termname;
 extern unsigned int tabspaces;
 extern unsigned int defaultfg;
 extern unsigned int defaultbg;
+extern char *iso14755_cmd;
 extern float alpha;
