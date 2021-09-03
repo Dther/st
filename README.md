@@ -6,6 +6,7 @@ future patches may be added for functionality's sake.
 
 ## Current Planned Patches
    * iso14755
+   * Some kind of prompt to prevent accidental quitting by X
     
 ## Patches that were added at one point, but later removed
    * alpha
