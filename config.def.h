@@ -192,8 +192,11 @@ static uint forcemousemod = ShiftMask;
 
 /*
  * Command used to query unicode glyphs.
+ * NOTE: the commented command causes dmenu to be embedded in st.
+ * This causes it to crash if dmenu isn't patched with alpha just like st is.
  */
-char *iso14755_cmd = "dmenu -w \"$WINDOWID\" -p codepoint: </dev/null";
+//char *iso14755_cmd = "dmenu -w \"$WINDOWID\" -p codepoint: </dev/null";
+char *iso14755_cmd = "dmenu -p codepoint: </dev/null";
 
 /*
  * Internal mouse shortcuts.
