@@ -1,7 +1,7 @@
 # Dther's Simple Terminal Fork
 A personal fork of the suckless st (simple terminal). 
 
-The main important part of this repository is config.h, but
+The main important part of this repository is config.def.h, but
 future patches may be added for functionality's sake.
 
 ## Current Planned Patches

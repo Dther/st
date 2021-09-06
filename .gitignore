@@ -5,3 +5,4 @@ st
 *.orig
 *.rej
 *.diff
+config.h
