@@ -237,3 +237,41 @@ st-bs-256color| simpleterm with backspace as backspace and 256colors,
 	use=st-256color,
 	kbs=\010,
 	kdch1=\177,
+
+# use the below as a vi macro to add more
+## 0yt|o	use=pA,dF-o	smcup@,	rmcup@,
+
+st-mono-nosmcup| simpleterm monocolor without smcup,
+	use=st-mono,
+	smcup@,
+	rmcup@,
+
+st-nosmcup| simpleterm without smcup,
+	use=st,
+	smcup@,
+	rmcup@,
+
+st-256color-nosmcup| simpleterm with 256 colors without smcup,
+	use=st-256color,
+	smcup@,
+	rmcup@,
+
+st-meta-nosmcup| simpleterm with meta key without smcup,
+	use=st-meta,
+	smcup@,
+	rmcup@,
+
+st-meta-256color-nosmcup| simpleterm with meta key and 256 colors without smcup,
+	use=st-meta-256color,
+	smcup@,
+	rmcup@,
+
+st-bs-nosmcup| simpleterm with backspace as backspace without smcup,
+	use=st-bs,
+	smcup@,
+	rmcup@,
+
+st-bs-256color-nosmcup| simpleterm with backspace as backspace and 256colors without smcup,
+	use=st-bs-256color,
+	smcup@,
+	rmcup@,
