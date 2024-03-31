@@ -3,9 +3,9 @@
 /*
  * appearance
  *
- * font: see http://freedesktop.org/software/fontconfig/fontconfig-user.html
+ * font: Terminus is neato
  */
-static char *font = "Liberation Mono:pixelsize=12:antialias=true:autohint=true";
+static char *font = "Terminus:pixelsize=14:antialias=true:autohint=true";
 static int borderpx = 2;
 
 /*
@@ -53,14 +53,14 @@ int allowwindowops = 0;
  * near minlatency, but it waits longer for slow updates to avoid partial draw.
  * low minlatency will tear/flicker more, as it can "detect" idle too early.
  */
-static double minlatency = 2;
+static double minlatency = 8;
 static double maxlatency = 33;
 
 /*
  * blinking timeout (set to 0 to disable blinking) for the terminal blinking
  * attribute.
  */
-static unsigned int blinktimeout = 800;
+static unsigned int blinktimeout = 400;
 
 /*
  * thickness of underline and bar cursors
@@ -93,35 +93,49 @@ char *termname = "st-256color";
  */
 unsigned int tabspaces = 8;
 
+/* bg opacity */
+float alpha = 0.8;
+
 /* Terminal colors (16 first used in escape sequence) */
 static const char *colorname[] = {
-	/* 8 normal colors */
-	"black",
-	"red3",
-	"green3",
-	"yellow3",
-	"blue2",
-	"magenta3",
-	"cyan3",
-	"gray90",
-
-	/* 8 bright colors */
-	"gray50",
-	"red",
-	"green",
-	"yellow",
-	"#5c5cff",
-	"magenta",
-	"cyan",
-	"white",
-
-	[255] = 0,
-
-	/* more colors can be added after 255 to use with DefaultXX */
-	"#cccccc",
-	"#555555",
-	"gray90", /* default foreground colour */
-	"black", /* default background colour */
+	/* solarized dark */
+	//"#073642",  /*  0: black    */
+	//"#dc322f",  /*  1: red      */
+	//"#859900",  /*  2: green    */
+	//"#b58900",  /*  3: yellow   */
+	//"#268bd2",  /*  4: blue     */
+	//"#d33682",  /*  5: magenta  */
+	//"#2aa198",  /*  6: cyan     */
+	//"#eee8d5",  /*  7: white    */
+	//"#002b36",  /*  8: brblack  */
+	//"#cb4b16",  /*  9: brred    */
+	//"#586e75",  /* 10: brgreen  */
+	//"#657b83",  /* 11: bryellow */
+	//"#839496",  /* 12: brblue   */
+	//"#6c71c4",  /* 13: brmagenta*/
+	//"#93a1a1",  /* 14: brcyan   */
+	//"#fdf6e3",  /* 15: brwhite  */
+    
+    /* jellybeans dark */
+    "#393939",
+    "#ca674a",
+    "#96a967",
+    "#d3a94a",
+    "#5778c1",
+    "#9c35ac",
+    "#6eb5f3",
+    "#a9a9a9",
+    "#535551",
+    "#ea2828",
+    "#87dd32",
+    "#f7e44d",
+    "#6f9bca",
+    "#a97ca4",
+    "#32dddd",
+    "#e9e9e7",
+    [255] = 0,
+    "#101010",
+    "#d7d7d7",
 };
 
 
@@ -129,19 +143,26 @@ static const char *colorname[] = {
  * Default colors (colorname index)
  * foreground, background, cursor, reverse cursor
  */
-unsigned int defaultfg = 258;
-unsigned int defaultbg = 259;
-unsigned int defaultcs = 256;
-static unsigned int defaultrcs = 257;
+unsigned int defaultfg = 257;
+unsigned int defaultbg = 256;
+unsigned int defaultcs = 14;
+static unsigned int defaultrcs = 15;
 
 /*
- * Default shape of cursor
- * 2: Block ("█")
- * 4: Underline ("_")
- * 6: Bar ("|")
- * 7: Snowman ("☃")
+ * https://invisible-island.net/xterm/ctlseqs/ctlseqs.html#h4-Functions-using-CSI-_-ordered-by-the-final-character-lparen-s-rparen:CSI-Ps-SP-q.1D81
+ * Default style of cursor
+ * 0: Blinking block
+ * 1: Blinking block (default)
+ * 2: Steady block ("█")
+ * 3: Blinking underline
+ * 4: Steady underline ("_")
+ * 5: Blinking bar
+ * 6: Steady bar ("|")
+ * 7: Blinking st cursor
+ * 8: Steady st cursor
  */
-static unsigned int cursorshape = 2;
+static unsigned int cursorshape = 1;
+static Rune stcursor = 0x2603; /* snowman (U+2603) */
 
 /*
  * Default columns and rows numbers
@@ -162,7 +183,6 @@ static unsigned int mousebg = 0;
  * doesn't match the ones requested.
  */
 static unsigned int defaultattr = 11;
-
 /*
  * Force mouse select/shortcuts while mask is active (when MODE_MOUSE is set).
  * Note that if you want to use ShiftMask with selmasks, set this to an other
@@ -171,11 +191,21 @@ static unsigned int defaultattr = 11;
 static uint forcemousemod = ShiftMask;
 
 /*
+ * Command used to query unicode glyphs.
+ * NOTE: the commented command causes dmenu to be embedded in st.
+ * This causes it to crash if dmenu isn't patched with alpha just like st is.
+ */
+//char *iso14755_cmd = "dmenu -w \"$WINDOWID\" -p codepoint: </dev/null";
+//char *iso14755_cmd = "dmenu -p codepoint: </dev/null";
+
+/*
  * Internal mouse shortcuts.
  * Beware that overloading Button1 will disable the selection.
  */
 static MouseShortcut mshortcuts[] = {
 	/* mask                 button   function        argument       release */
+//	{ ShiftMask,            Button4, kscrollup,      {.i = 1} },
+//	{ ShiftMask,            Button5, kscrolldown,    {.i = 1} },
 	{ XK_ANY_MOD,           Button2, selpaste,       {.i = 0},      1 },
 	{ ShiftMask,            Button4, ttysend,        {.s = "\033[5;2~"} },
 	{ XK_ANY_MOD,           Button4, ttysend,        {.s = "\031"} },
@@ -199,8 +229,13 @@ static Shortcut shortcuts[] = {
 	{ TERMMOD,              XK_C,           clipcopy,       {.i =  0} },
 	{ TERMMOD,              XK_V,           clippaste,      {.i =  0} },
 	{ TERMMOD,              XK_Y,           selpaste,       {.i =  0} },
+//	{ TERMMOD,              XK_I,           iso14755,       {.i =  0} },
 	{ ShiftMask,            XK_Insert,      selpaste,       {.i =  0} },
 	{ TERMMOD,              XK_Num_Lock,    numlock,        {.i =  0} },
+/*
+	{ ShiftMask,            XK_Page_Up,     kscrollup,      {.i = -1} },
+	{ ShiftMask,            XK_Page_Down,   kscrolldown,    {.i = -1} },
+*/
 };
 
 /*
